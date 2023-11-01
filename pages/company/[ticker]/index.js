@@ -12,7 +12,7 @@ import {
 } from "../../api";
 import StockCard from "../../../components/stockCard/StockCard";
 
-const index = () => {
+const CompanyDetails = () => {
   const router = useRouter();
   const { ticker } = router.query;
   const [companyData, setCompanyData] = useState({});
@@ -147,4 +147,4 @@ const index = () => {
   );
 };
 
-export default index;
+export default CompanyDetails;

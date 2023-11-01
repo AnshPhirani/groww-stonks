@@ -5,11 +5,12 @@ import Header from "../../../components/header/Header";
 import PriceChart from "../../../components/priceChart/PriceChart";
 import { useAsyncCallback } from "react-async-hook";
 import AboutCompany from "../../../components/aboutCompany/AboutCompany";
+
 import {
   getCompanyData,
   getCompanyLogo,
   getDailyStockPriceData,
-} from "../../api";
+} from "../../../lib/api";
 import StockCard from "../../../components/stockCard/StockCard";
 
 const CompanyDetails = () => {
@@ -18,6 +19,7 @@ const CompanyDetails = () => {
   const [companyData, setCompanyData] = useState({});
   const [companyLogo, setCompanyLogo] = useState(null);
   const [dailyStockPriceData, setDailyStockPriceData] = useState([]); // [{date, price}]
+  const [errorMessage, setErrorMessage] = useState(null);
 
   const fetchCompanyData = useAsyncCallback(getCompanyData, {
     onSuccess: (response) => {
@@ -54,9 +56,16 @@ const CompanyDetails = () => {
 
   const fetchDailyStockPriceData = useAsyncCallback(getDailyStockPriceData, {
     onSuccess: (data) => {
+      if (!data.data["Time Series (Daily)"]) {
+        setErrorMessage(
+          "Thank you for using Alpha Vantage! Our standard API rate limit is 25 requests per day. Please subscribe to any of the premium plans at https://www.alphavantage.co/premium/ to instantly remove all daily rate limits."
+        );
+        return;
+      }
+
       const formattedData = Object.entries(
         data.data["Time Series (Daily)"]
-      ).map(([date, { "5. adjusted close": price }]) => ({ date, price }));
+      ).map(([date, { "4. close": price }]) => ({ date, price }));
       setDailyStockPriceData(formattedData);
       localStorage.setItem(
         "dailyStockPriceData-" + ticker,
@@ -101,17 +110,22 @@ const CompanyDetails = () => {
     }
   }, [router.isReady]);
 
-  const { MarketCapitalization, PERatio, Beta, DividendYield, ProfitMargin } =
-    companyData;
+  if (errorMessage) {
+    return (
+      <div className={styles.errorContainer}>
+        <h3>Please Try again later</h3>
+        <p>{errorMessage}</p>
+      </div>
+    );
+  }
 
-  console.log(companyData);
   return (
     <div className={styles.overview}>
       <Header />
       <div className={styles.container}>
         <StockCard
           stocksData={{
-            companyLogo: companyLogo ? companyLogo : "/images/groww.svg",
+            companyLogo: companyLogo ? companyLogo : "/buildings.svg",
             companyName: companyData.Name,
             ticker: ticker,
             "52 Week High": companyData["52WeekHigh"],
@@ -128,18 +142,19 @@ const CompanyDetails = () => {
             "Profit Margin": companyData.ProfitMargin,
           }}
         />
+
+        {}
+
         <PriceChart
           companyLogo={companyLogo ?? "/images/groww.svg"}
           dailyStockPriceData={dailyStockPriceData}
         />
       </div>
 
-      {/* <RangeSlider
-        currentPrice={dailyStockPriceData[0]?.price}
-        companyData={companyData}
-      /> */}
-      {fetchCompanyData.Loading ? (
-        <h2>Loading...</h2>
+      {fetchCompanyData.loading ? (
+        <div className={styles.loaderContainer}>
+          <img height={80} src="/loader2.svg" alt="Loading" />
+        </div>
       ) : (
         <AboutCompany companyData={companyData} />
       )}

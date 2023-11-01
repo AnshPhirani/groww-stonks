@@ -21,7 +21,7 @@ const StockCard = (props) => {
           {companyName && <span>{companyName}</span>}
         </h2>
         <div className={styles.bookmark} onClick={handleBookmark}>
-          <Bookmark onClick={handleBookmark} />
+          <Bookmark onClick={handleBookmark} stroke={"#000"} />
         </div>
       </div>
 
@@ -29,7 +29,7 @@ const StockCard = (props) => {
         {Object.entries(data).map(([key, value]) => (
           <div className={styles.dataItem} key={key}>
             <span className={styles.dataKey}>{key}</span>
-            <span className={styles.dataValue}>{value}</span>
+            <span className={styles.dataValue}>{value ?? "not found"}</span>
           </div>
         ))}
       </div>

@@ -2,7 +2,10 @@ import React from "react";
 import styles from "./AboutCompany.module.css";
 
 const AboutCompany = ({ companyData }) => {
-  console.log(companyData);
+  if (JSON.stringify(companyData) === "{}") {
+    return null;
+  }
+
   return (
     <div className={styles.container}>
       <div className={styles.containerHeader}>

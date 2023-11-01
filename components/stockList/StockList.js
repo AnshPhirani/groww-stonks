@@ -19,7 +19,7 @@ const StockList = ({ stocks }) => {
               stocksData={{
                 ticker: stock.ticker,
                 companyName: stock.name,
-                companyLogo: "/images/groww.svg",
+                companyLogo: "/buildings.svg",
                 volume: stock.volume,
                 price: stock.price,
                 change:

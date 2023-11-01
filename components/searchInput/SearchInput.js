@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import styles from "./SearchInput.module.css";
 import { useAsyncCallback } from "react-async-hook";
-import { getSearchResults } from "../../pages/api";
+import { getSearchResults } from "../../lib/api";
 import Link from "next/link";
 
 const SearchInput = () => {
@@ -26,10 +26,16 @@ const SearchInput = () => {
     if (recentlyViewed) {
       setRecentlyViewed(JSON.parse(recentlyViewed));
     }
+    document.addEventListener("click", (event) => {
+      let searchInputDiv = document?.getElementById("search");
+      if (!searchInputDiv?.contains(event.target)) {
+        setShowSearchResults(false);
+      }
+    });
   }, []);
 
   useEffect(() => {
-    if (!searchText) {
+    if (searchText.trim() === "") {
       setSearchResults(recentlyViewed);
       return;
     }
@@ -64,7 +70,6 @@ const SearchInput = () => {
         "recentlyViewed",
         JSON.stringify(updatedRecentlyViewed)
       );
-      console.log(updatedRecentlyViewed);
     }
 
     // clear search text
@@ -72,7 +77,7 @@ const SearchInput = () => {
   };
 
   return (
-    <div className={styles.search}>
+    <div id="search" className={styles.search}>
       <input
         className={styles.input}
         type="text"
@@ -80,7 +85,6 @@ const SearchInput = () => {
         value={searchText}
         onChange={handleInputChange}
         onFocus={() => setShowSearchResults(true)}
-        onBlur={() => setTimeout(() => setShowSearchResults(false), 200)}
       />
       <div
         className={styles.resultContainer}

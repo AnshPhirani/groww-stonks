@@ -4,6 +4,19 @@
   align-items: center;
 }
 
+.errorContainer {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  color: var(--text-color);
+}
+
+.loaderContainer {
+  display: flex;
+  justify-content: center;
+}
+
 @media screen and (max-width: 768px) {
   .container {
     display: flex;

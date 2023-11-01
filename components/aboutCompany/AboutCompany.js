@@ -2,7 +2,7 @@ import React from "react";
 import styles from "./AboutCompany.module.css";
 
 const AboutCompany = ({ companyData }) => {
-  if (JSON.stringify(companyData) === "{}") {
+  if (!companyData.Name) {
     return null;
   }
 

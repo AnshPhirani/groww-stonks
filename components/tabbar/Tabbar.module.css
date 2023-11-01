@@ -1,0 +1,28 @@
+.tabbar {
+  display: flex;
+  align-items: center;
+  background-color: var(--main-bg);
+  padding: 10px 20px;
+}
+
+.tabLeft {
+  display: flex;
+}
+
+.tabButton {
+  padding: 10px 20px;
+  margin-right: 10px;
+  border: none;
+  background: none;
+  color: var(--text-color);
+  font-size: 16px;
+  cursor: pointer;
+}
+
+.activeTab {
+  border-bottom: 2px solid var(--accent-color);
+}
+
+.tab .tabRight {
+  flex-grow: 1;
+}

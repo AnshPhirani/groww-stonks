@@ -1,0 +1,27 @@
+.stockList {
+  display: grid;
+  grid-template-columns: repeat(
+    auto-fit,
+    minmax(min(100%/1, max(300px, 100%/3)), 1fr)
+  );
+  justify-items: center;
+  width: 100%;
+  background-color: var(--main-bg);
+  overflow: hidden;
+  margin-bottom: 20px;
+}
+
+.loadMore {
+  display: flex;
+  justify-content: center;
+}
+
+.loadMore > button {
+  font-size: 1rem;
+  padding: 10px 20px;
+  border-radius: 8px;
+  border: none;
+  background-color: var(--main-bg);
+  cursor: pointer;
+  color: var(--text-color);
+}

@@ -1,0 +1,19 @@
+.container {
+  padding: 20px;
+  /* width: 100%; */
+  /* height: auto; */
+  flex-grow: 1;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.chart {
+  /* background-color: var(--bg-text); */
+}
+
+@media screen and (max-width: 768px) {
+  .container {
+    width: 100%;
+  }
+}

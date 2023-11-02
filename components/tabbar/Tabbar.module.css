@@ -4,7 +4,6 @@
   background-color: var(--main-bg);
   padding: 10px 20px;
   width: 100vw;
-  overflow: scroll;
 }
 
 .tabLeft {
